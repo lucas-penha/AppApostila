@@ -61,7 +61,7 @@ export default function PdfViewer({ file, title }: PdfViewerProps) {
   }, [numPages, pageNumber]);
 
   return (
-    <section className="viewer-shadow w-full rounded-2xl bg-white p-3 md:p-5">
+    <section className="viewer-shadow w-full rounded-2xl bg-white p-2 md:p-4">
       <header className="mb-4 flex flex-col gap-3 border-b border-slate-200 pb-4 md:flex-row md:items-center md:justify-between">
         <div>
           <h2 className="text-base font-semibold text-slate-900 md:text-lg">{title}</h2>
@@ -116,7 +116,7 @@ export default function PdfViewer({ file, title }: PdfViewerProps) {
       <div
         ref={containerRef}
         onScroll={updateCurrentPageByScroll}
-        className="max-h-[72vh] space-y-4 overflow-auto rounded-xl bg-slate-100 p-2 md:p-4"
+        className="h-[calc(100vh-12rem)] min-h-[70vh] space-y-4 overflow-auto rounded-xl bg-slate-100 p-2 md:p-3"
       >
         <Document
           file={file}
