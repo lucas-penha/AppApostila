@@ -10,10 +10,10 @@ export type PdfMaterial = {
 export const pdfMaterials: PdfMaterial[] = [
   {
     slug: "guia-fundamentos-web",
-    title: "Guia de Fundamentos Web",
+    title: "Apostila de Comunicação e Oratória",
     description:
       "Material introdutório para leitura no app. Estrutura pronta para evoluir com comentários e anotações.",
-    coverSrc: "/covers/guia-fundamentos-web.svg",
+    coverSrc: "/covers/teste.png",
     pdfSrc: "/pdfs/guia-fundamentos-web.pdf",
     category: "Desenvolvimento"
   }
