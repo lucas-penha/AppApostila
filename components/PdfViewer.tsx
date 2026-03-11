@@ -1,15 +1,12 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import { ChevronLeft, ChevronRight, Minus, Plus } from "lucide-react";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  "pdfjs-dist/build/pdf.worker.min.mjs",
-  import.meta.url
-).toString();
+pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 type PdfViewerProps = {
   file: string;
@@ -21,10 +18,47 @@ export default function PdfViewer({ file, title }: PdfViewerProps) {
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [scale, setScale] = useState<number>(1);
 
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const pageRefs = useRef<Array<HTMLDivElement | null>>([]);
+
   const canPrev = pageNumber > 1;
   const canNext = pageNumber < numPages;
-
   const zoomLabel = useMemo(() => `${Math.round(scale * 100)}%`, [scale]);
+
+  const scrollToPage = useCallback(
+    (targetPage: number) => {
+      const normalizedPage = Math.min(Math.max(targetPage, 1), numPages || 1);
+      const targetNode = pageRefs.current[normalizedPage - 1];
+      if (targetNode) {
+        targetNode.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+      setPageNumber(normalizedPage);
+    },
+    [numPages]
+  );
+
+  const updateCurrentPageByScroll = useCallback(() => {
+    const container = containerRef.current;
+    if (!container || !numPages) return;
+
+    const containerTop = container.getBoundingClientRect().top;
+    let closestPage = 1;
+    let closestDistance = Number.POSITIVE_INFINITY;
+
+    for (let i = 0; i < numPages; i += 1) {
+      const pageNode = pageRefs.current[i];
+      if (!pageNode) continue;
+      const distance = Math.abs(pageNode.getBoundingClientRect().top - containerTop - 16);
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestPage = i + 1;
+      }
+    }
+
+    if (closestPage !== pageNumber) {
+      setPageNumber(closestPage);
+    }
+  }, [numPages, pageNumber]);
 
   return (
     <section className="viewer-shadow w-full rounded-2xl bg-white p-3 md:p-5">
@@ -58,7 +92,7 @@ export default function PdfViewer({ file, title }: PdfViewerProps) {
           <button
             type="button"
             disabled={!canPrev}
-            onClick={() => setPageNumber((current) => Math.max(1, current - 1))}
+            onClick={() => scrollToPage(pageNumber - 1)}
             className="rounded-lg border border-slate-300 p-2 text-slate-700 transition enabled:hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-50"
             aria-label="Página anterior"
           >
@@ -70,7 +104,7 @@ export default function PdfViewer({ file, title }: PdfViewerProps) {
           <button
             type="button"
             disabled={!canNext}
-            onClick={() => setPageNumber((current) => Math.min(numPages, current + 1))}
+            onClick={() => scrollToPage(pageNumber + 1)}
             className="rounded-lg border border-slate-300 p-2 text-slate-700 transition enabled:hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-50"
             aria-label="Próxima página"
           >
@@ -79,25 +113,44 @@ export default function PdfViewer({ file, title }: PdfViewerProps) {
         </div>
       </header>
 
-      <div className="max-h-[72vh] overflow-auto rounded-xl bg-slate-100 p-2 md:p-4">
+      <div
+        ref={containerRef}
+        onScroll={updateCurrentPageByScroll}
+        className="max-h-[72vh] space-y-4 overflow-auto rounded-xl bg-slate-100 p-2 md:p-4"
+      >
         <Document
           file={file}
           loading={<p className="p-6 text-center text-sm text-slate-500">Carregando PDF...</p>}
           onLoadSuccess={({ numPages: loadedPages }) => {
             setNumPages(loadedPages);
             setPageNumber(1);
+            pageRefs.current = Array.from({ length: loadedPages }, () => null);
           }}
           onLoadError={() => {
             setNumPages(0);
+            pageRefs.current = [];
           }}
         >
-          <Page
-            pageNumber={pageNumber}
-            scale={scale}
-            renderTextLayer
-            renderAnnotationLayer
-            className="mx-auto"
-          />
+          {Array.from({ length: numPages }, (_, index) => {
+            const currentPage = index + 1;
+
+            return (
+              <div
+                key={`page_${currentPage}`}
+                ref={(node) => {
+                  pageRefs.current[index] = node;
+                }}
+                className="mx-auto w-fit"
+              >
+                <Page
+                  pageNumber={currentPage}
+                  scale={scale}
+                  renderTextLayer
+                  renderAnnotationLayer
+                />
+              </div>
+            );
+          })}
         </Document>
       </div>
     </section>
