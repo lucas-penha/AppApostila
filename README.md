@@ -32,6 +32,7 @@ components/
   PdfViewer.tsx
 lib/
   pdfs.ts
+next.config.mjs
 public/
   covers/guia-fundamentos-web.svg
   pdfs/guia-fundamentos-web.pdf
@@ -52,3 +53,8 @@ public/
 - Adicionar camada de estado para highlights e comentários por `slug`/página.
 - Persistir anotações em backend (ex.: Supabase/Postgres).
 - Incluir barra lateral com lista de comentários por trecho.
+
+
+## Nota de compatibilidade
+
+- O arquivo de configuração do Next foi definido como `next.config.mjs` (em vez de `next.config.ts`) para compatibilidade com execução local em ambientes Windows/Node onde `.ts` não é aceito como config runtime.
