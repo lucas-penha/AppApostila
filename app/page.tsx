@@ -7,7 +7,7 @@ export default function HomePage() {
     <main className="mx-auto min-h-screen w-full max-w-6xl px-6 py-12 md:py-16">
       <header className="mx-auto mb-12 flex max-w-3xl justify-center">
         <Image
-          src="/logo.svg"
+          src="/logo.jpg"
           alt="Logo"
           width={420}
           height={140}
