@@ -1,0 +1,16 @@
+<svg width="640" height="860" viewBox="0 0 640 860" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="640" y2="860" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3F6DF6"/>
+      <stop offset="1" stop-color="#1E2A5A"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="860" rx="36" fill="url(#bg)"/>
+  <rect x="54" y="68" width="532" height="724" rx="24" fill="white" fill-opacity="0.12"/>
+  <text x="86" y="220" fill="white" font-family="Arial, sans-serif" font-size="48" font-weight="700">Guia de</text>
+  <text x="86" y="282" fill="white" font-family="Arial, sans-serif" font-size="48" font-weight="700">Fundamentos Web</text>
+  <text x="86" y="348" fill="#DDE6FF" font-family="Arial, sans-serif" font-size="26">HTML · CSS · JavaScript</text>
+  <rect x="86" y="420" width="468" height="2" fill="#C8D6FF" fill-opacity="0.5"/>
+  <text x="86" y="496" fill="white" font-family="Arial, sans-serif" font-size="24">Apostila de introdução prática</text>
+  <text x="86" y="550" fill="#DDE6FF" font-family="Arial, sans-serif" font-size="22">Leitura interna no App</text>
+</svg>
