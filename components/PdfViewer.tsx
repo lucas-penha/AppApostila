@@ -61,18 +61,18 @@ export default function PdfViewer({ file, title }: PdfViewerProps) {
   }, [numPages, pageNumber]);
 
   return (
-    <section className="viewer-shadow w-full rounded-2xl bg-white p-2 md:p-4">
-      <header className="mb-4 flex flex-col gap-3 border-b border-slate-200 pb-4 md:flex-row md:items-center md:justify-between">
+    <section className="viewer-shadow w-full rounded-2xl border border-brand-100 bg-white/95 p-2 md:p-4">
+      <header className="mb-4 flex flex-col gap-3 border-b border-brand-100 pb-4 md:flex-row md:items-center md:justify-between">
         <div>
           <h2 className="text-base font-semibold text-slate-900 md:text-lg">{title}</h2>
-          <p className="text-sm text-slate-500">Leitura embutida no aplicativo</p>
+          <p className="text-sm text-accent-600">Leitura embutida no aplicativo</p>
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
           <button
             type="button"
             onClick={() => setScale((current) => Math.max(0.6, current - 0.1))}
-            className="rounded-lg border border-slate-300 p-2 text-slate-700 transition hover:bg-slate-100"
+            className="rounded-lg border border-brand-200 p-2 text-brand-700 transition hover:bg-brand-50"
             aria-label="Reduzir zoom"
           >
             <Minus size={16} />
@@ -81,31 +81,31 @@ export default function PdfViewer({ file, title }: PdfViewerProps) {
           <button
             type="button"
             onClick={() => setScale((current) => Math.min(2.2, current + 0.1))}
-            className="rounded-lg border border-slate-300 p-2 text-slate-700 transition hover:bg-slate-100"
+            className="rounded-lg border border-brand-200 p-2 text-brand-700 transition hover:bg-brand-50"
             aria-label="Aumentar zoom"
           >
             <Plus size={16} />
           </button>
 
-          <div className="mx-2 hidden h-7 w-px bg-slate-200 md:block" />
+          <div className="mx-2 hidden h-7 w-px bg-brand-100 md:block" />
 
           <button
             type="button"
             disabled={!canPrev}
             onClick={() => scrollToPage(pageNumber - 1)}
-            className="rounded-lg border border-slate-300 p-2 text-slate-700 transition enabled:hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-50"
+            className="rounded-lg border border-brand-200 p-2 text-brand-700 transition enabled:hover:bg-brand-50 disabled:cursor-not-allowed disabled:opacity-50"
             aria-label="Página anterior"
           >
             <ChevronLeft size={16} />
           </button>
-          <span className="text-sm text-slate-700">
+          <span className="text-sm text-brand-700">
             Página <strong>{pageNumber}</strong> de <strong>{numPages || "--"}</strong>
           </span>
           <button
             type="button"
             disabled={!canNext}
             onClick={() => scrollToPage(pageNumber + 1)}
-            className="rounded-lg border border-slate-300 p-2 text-slate-700 transition enabled:hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-50"
+            className="rounded-lg border border-brand-200 p-2 text-brand-700 transition enabled:hover:bg-brand-50 disabled:cursor-not-allowed disabled:opacity-50"
             aria-label="Próxima página"
           >
             <ChevronRight size={16} />
@@ -116,11 +116,11 @@ export default function PdfViewer({ file, title }: PdfViewerProps) {
       <div
         ref={containerRef}
         onScroll={updateCurrentPageByScroll}
-        className="h-[calc(100vh-12rem)] min-h-[70vh] space-y-4 overflow-auto rounded-xl bg-slate-100 p-2 md:p-3"
+        className="h-[calc(100vh-12rem)] min-h-[70vh] space-y-4 overflow-auto rounded-xl bg-gradient-to-b from-brand-50 to-accent-100/40 p-2 md:p-3"
       >
         <Document
           file={file}
-          loading={<p className="p-6 text-center text-sm text-slate-500">Carregando PDF...</p>}
+          loading={<p className="p-6 text-center text-sm text-brand-700">Carregando PDF...</p>}
           onLoadSuccess={({ numPages: loadedPages }) => {
             setNumPages(loadedPages);
             setPageNumber(1);

@@ -22,7 +22,7 @@ export default function PdfPage({ params }: PdfPageProps) {
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-[min(1800px,99vw)] px-2 py-4 md:px-4 md:py-6">
-      <Link href="/" className="mb-6 inline-flex text-sm font-medium text-brand-700 hover:text-brand-500">
+      <Link href="/" className="mb-6 inline-flex text-sm font-semibold text-brand-700 hover:text-accent-600">
         ← Voltar para a home
       </Link>
 
