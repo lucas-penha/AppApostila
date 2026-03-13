@@ -1,17 +1,19 @@
+import Image from "next/image";
 import Link from "next/link";
 import { gradeLabels, grades } from "@/lib/school";
 
 export default function HomePage() {
   return (
     <main className="mx-auto min-h-screen w-full max-w-6xl px-6 py-12 md:py-16">
-      <header className="mx-auto mb-12 max-w-3xl text-center">
-        <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-brand-700">Portal Educacional</p>
-        <h1 className="text-4xl font-extrabold leading-tight text-slate-900 md:text-5xl">
-          Turmas com visual moderno em <span className="text-brand-700">azul</span> e <span className="text-accent-600">laranja</span>
-        </h1>
-        <p className="mt-4 text-base text-slate-600 md:text-lg">
-          Selecione a turma para acessar disciplinas e abrir os materiais de estudo com uma experiência mais elegante.
-        </p>
+      <header className="mx-auto mb-12 flex max-w-3xl justify-center">
+        <Image
+          src="/logo.svg"
+          alt="Logo"
+          width={420}
+          height={140}
+          priority
+          className="h-auto w-auto max-h-28 object-contain md:max-h-32"
+        />
       </header>
 
       <section className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
