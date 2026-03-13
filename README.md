@@ -26,6 +26,7 @@ app/
   layout.tsx
   globals.css
   page.tsx
+  turma/[grade]/page.tsx
   pdf/[slug]/page.tsx
 components/
   PdfCard.tsx
@@ -58,3 +59,10 @@ public/
 ## Nota de compatibilidade
 
 - O arquivo de configuração do Next foi definido como `next.config.mjs` (em vez de `next.config.ts`) para compatibilidade com execução local em ambientes Windows/Node onde `.ts` não é aceito como config runtime.
+
+
+## Fluxo atual
+
+- Home com seleção de turmas: 6º ano até 2º ano do médio.
+- Cada turma exibe as disciplinas: Matemática, Espanhol, Comunicação, Empreendedorismo e Inteligência emocional.
+- Cada disciplina possui acesso ao material PDF embutido no app.
